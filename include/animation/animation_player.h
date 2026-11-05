@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Arduino.h>
 #include "animation/animation.h"
-#include "graphics/neopixel_renderer.h"
+
+class NeoPixelRenderer;
 
 class AnimationPlayer {
 public:

@@ -1,13 +1,13 @@
 #include <Arduino.h>
+#include <WiFi.h>
 
-#include "graphics/neopixel_renderer.h"
 #include "animation/animation_player.h"
-#include "network/network_manager.h"
+#include "config.h"
+#include "graphics/neopixel_renderer.h"
 #include "web/animation_web_server.h"
 
 NeoPixelRenderer renderer;
 AnimationPlayer animationPlayer(renderer);
-NetworkManager networkManager;
 AnimationWebServer webServer(animationPlayer);
 
 void setup() {
@@ -15,16 +15,16 @@ void setup() {
 
     renderer.setup();
 
-    if (!networkManager.setup()) {
+    WiFi.mode(WIFI_AP);
+    if (!WiFi.softAP(Config::AP_SSID, Config::AP_PASSWORD)) {
         Serial.println("Wi-Fi setup failed");
         return;
     }
-    
+
     webServer.setup();
 }
 
 void loop() {
     webServer.update();
     animationPlayer.update();
-    delay(1);
 }

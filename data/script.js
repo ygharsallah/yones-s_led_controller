@@ -52,10 +52,6 @@ function createFrame(index) {
   };
 }
 
-function colorFromHsv(hue, saturation) {
-  return hsvToRgb(hue, saturation, 1);
-}
-
 function colorToHsv(color) {
   const values = hexToRgb(color).map((channel) => channel / 255);
   const max = Math.max(...values);
@@ -93,7 +89,7 @@ function drawWheel() {
 
       if (distance <= radius) {
         const hue = (Math.atan2(dy, dx) * 180 / Math.PI + 360) % 360;
-        const color = colorFromHsv(hue, distance / radius);
+        const color = hsvToRgb(hue, distance / radius, 1);
         image.data[pixel] = color[0];
         image.data[pixel + 1] = color[1];
         image.data[pixel + 2] = color[2];
@@ -151,11 +147,11 @@ function chooseColor(event) {
   const bounds = wheel.getBoundingClientRect();
   const x = event.clientX - (bounds.left + bounds.width / 2);
   const y = event.clientY - (bounds.top + bounds.height / 2);
-  const distance = Math.min(Math.hypot(x, y), wheelRadius());
+  const radius = wheelRadius();
+  const distance = Math.min(Math.hypot(x, y), radius);
   const hue = (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
-  state.frames[state.frame].leds[state.led].color =
-    rgbToHex(colorFromHsv(hue, distance / wheelRadius()));
   const selected = state.frames[state.frame].leds[state.led];
+  selected.color = rgbToHex(hsvToRgb(hue, distance / radius, 1));
   dot.style.background = selected.color;
   updateWheelMarker(selected.color);
 }
@@ -218,17 +214,11 @@ $("all").onclick = () => {
   render();
 };
 
-
 $("upload").onclick = async () => {
   const data = {
     ledCount: state.ledCount,
     frameTime: state.frameTime,
-    frames: state.frames.map(frame => ({
-      leds: frame.leds.map(led => ({
-        color: led.color,
-        enabled: led.enabled
-      }))
-    }))
+    frames: state.frames
   };
 
   const response = await fetch("/api/animation", {
@@ -245,7 +235,6 @@ $("upload").onclick = async () => {
 
   console.log("Animation uploaded!");
 };
-
 
 count.onchange = (event) => {
   state.ledCount = Math.max(1, Math.min(64, Number(event.target.value) || 1));
