@@ -1,5 +1,6 @@
 #include "web/animation_web_server.h"
 #include "animation/animation_parser.h"
+#include "animation/animation_player.h"
 #include "config.h"
 
 #include <ArduinoJson.h>

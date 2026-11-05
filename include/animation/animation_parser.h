@@ -1,9 +1,8 @@
 #pragma once
 
-#include <Arduino.h>
+#include <WString.h>
 #include "animation/animation.h"
 
-class AnimationParser {
-public:
-    static bool parse(const String& json, Animation& result);
-};
+namespace AnimationParser {
+    bool parse(const String& json, Animation& result);
+}

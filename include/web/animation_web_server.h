@@ -1,8 +1,9 @@
 #pragma once
 
-#include <Arduino.h>
 #include <WebServer.h>
-#include "animation/animation_player.h"
+#include "animation/animation.h"
+
+class AnimationPlayer;
 
 class AnimationWebServer {
 public:

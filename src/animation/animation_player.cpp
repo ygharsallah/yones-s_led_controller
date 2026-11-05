@@ -1,4 +1,7 @@
 #include "animation/animation_player.h"
+#include "graphics/neopixel_renderer.h"
+
+#include <Arduino.h>
 
 AnimationPlayer::AnimationPlayer(NeoPixelRenderer& renderer)
     : renderer_(renderer) {}

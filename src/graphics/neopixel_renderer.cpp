@@ -1,4 +1,5 @@
 #include "graphics/neopixel_renderer.h"
+#include "animation/animation.h"
 #include "config.h"
 
 NeoPixelRenderer::NeoPixelRenderer()

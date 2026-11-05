@@ -1,7 +1,8 @@
 #pragma once
 
 #include <Adafruit_NeoPixel.h>
-#include "animation/animation.h"
+
+struct AnimationFrame;
 
 class NeoPixelRenderer {
 public:
