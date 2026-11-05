@@ -4,7 +4,7 @@
 
 namespace Config {
     constexpr uint8_t LED_PIN = 26;
-    constexpr uint8_t BRIGHTNESS = 120;
+    constexpr uint8_t BRIGHTNESS = 200;
 
     constexpr size_t MAX_LEDS = 64;
     constexpr size_t MAX_FRAMES = 16;
